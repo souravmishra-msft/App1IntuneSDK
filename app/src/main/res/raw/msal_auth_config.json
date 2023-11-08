@@ -1,0 +1,16 @@
+{
+  "client_id" : "0e0e207c-fc91-4e20-b1df-a859d7b4bcbe",
+  "authorization_user_agent" : "DEFAULT",
+  "redirect_uri" : "msauth://com.example.app1intunesdk/EycsCcxVzOt2pCmWlPEHeopkeq0%3D",
+  "account_mode": "SINGLE",
+  "broker_redirect_uri_registered": true,
+  "authorities" : [
+    {
+      "type": "AAD",
+      "audience": {
+        "type": "AzureADMyOrg",
+        "tenant_id": "0891528f-b789-41ef-9d10-895a44f5f624"
+      }
+    }
+  ]
+}

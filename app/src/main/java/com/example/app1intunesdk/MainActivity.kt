@@ -19,6 +19,7 @@ import com.microsoft.identity.client.exception.MsalUserCancelException
 import com.microsoft.intune.mam.client.app.MAMComponents
 import com.microsoft.intune.mam.client.notification.MAMNotificationReceiverRegistry
 import com.microsoft.intune.mam.policy.MAMEnrollmentManager
+import com.microsoft.intune.mam.policy.MAMServiceAuthenticationCallback
 import com.microsoft.intune.mam.policy.notification.MAMEnrollmentNotification
 import com.microsoft.intune.mam.policy.notification.MAMNotification
 import com.microsoft.intune.mam.policy.notification.MAMNotificationType
@@ -27,23 +28,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var msalApp: ISingleAccountPublicClientApplication? = null
     private var msalAccount: IAccount? = null
-    private var mamEnrollmentManager: MAMEnrollmentManager? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.i("Inside-App1IntuneSDKApplication", "Inside App1IntuneSDKApplication")
-        // Registers a MAMAuthenticationCallback, which will try to acquire access tokens for MAM.
-        // This is necessary for proper MAM integration.
-        /*mgr = MAMComponents.get(MAMEnrollmentManager::class.java)
-        mgr?.registerAuthenticationCallback(AuthenticationCallback(applicationContext))*/
-        /* This section shows how to register a MAMNotificationReceiver, so you can perform custom
-         * actions based on MAM enrollment notifications.
-         * More information is available here:
-         * https://docs.microsoft.com/en-us/intune/app-sdk-android#types-of-notifications */
-
+        Log.i("Inside-onCreateMainActivity", "Inside onCreateMainActivity")
 
         PublicClientApplication.createSingleAccountPublicClientApplication(
             this,
@@ -51,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             object : IPublicClientApplication.ISingleAccountApplicationCreatedListener {
                 override fun onCreated(application: ISingleAccountPublicClientApplication?) {
                     msalApp = application
-                    initializeIntuneComponents()
+
                     loadAccount()
                 }
 
@@ -62,12 +54,13 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun initializeIntuneComponents() {
+    /*private fun initializeIntuneComponents() {
         // Initialize MAMEnrollmentManager and other Intune SDK components
         try {
-            mamEnrollmentManager = MAMComponents.get(MAMEnrollmentManager::class.java)
+
             // Other Intune SDK initialization here...
-            mamEnrollmentManager?.registerAuthenticationCallback(AuthenticationCallback(applicationContext))
+            *//*mamEnrollmentManager?.registerAuthenticationCallback(authenticationCallback)*//*
+
             MAMComponents.get(MAMNotificationReceiverRegistry::class.java)!!
                 .registerReceiver(
                     { notification: MAMNotification? ->
@@ -94,7 +87,14 @@ class MainActivity : AppCompatActivity() {
         } catch (e: AssertionError) {
             Log.e("IntuneInitializationError", e.toString())
         }
-    }
+    }*/
+
+    // Define the authentication callback
+    /*private val authenticationCallback = object: MAMServiceAuthenticationCallback {
+        override fun acquireToken(p0: String, p1: String, p2: String): String? {
+            msalApp.acquireToken()
+        }
+    }*/
 
     override fun onResume() {
         super.onResume()
@@ -190,7 +190,6 @@ class MainActivity : AppCompatActivity() {
                     var authorityURL = "https://login.microsoftonline.com/$tenantId"
 
                     Log.i("Inside-onSuccess", "Inside onSuccess")
-                    mamEnrollmentManager?.registerAccountForMAM(upn, aadId, tenantId, authorityURL)
                 }
 
             }

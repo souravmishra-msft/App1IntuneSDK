@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.javassist:javassist:3.27.0-GA")
-        classpath(files("libs/Microsoft.Intune.MAM.SDK-javadoc.jar"))
+        classpath(files("libs/com.microsoft.intune.mam.build.jar"))
     }
 }
 

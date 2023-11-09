@@ -14,5 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "App1IntuneSDK"
-include(":app")
+include(":app", ":libs")
  
